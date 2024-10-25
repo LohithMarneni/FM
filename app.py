@@ -19,17 +19,17 @@ questions = [
 
 @app.route('/')
 def index():
-    prompt = """
-    Generate eight questions in JSON array format to assess food preferences.
-    Each question should be an object with:
-    - "id": unique identifier
-    - "question": question text
-    - "options": an array of answer choices.
-    Return only the JSON array without extra text.
-    """
-    model = genai.GenerativeModel('gemini-pro')
-    questions_response = model.generate_content(prompt)
-    return render_template('index.html', questions=questions_response.text)
+    # prompt = """
+    # Generate eight questions in JSON array format to assess food preferences.
+    # Each question should be an object with:
+    # - "id": unique identifier
+    # - "question": question text
+    # - "options": an array of answer choices.
+    # Return only the JSON array without extra text.
+    # """
+    # model = genai.GenerativeModel('gemini-pro')
+    # questions_response = model.generate_content(prompt)
+    return render_template('index.html', questions=questions)
 
 @app.route('/suggest', methods=['POST'])
 def suggest_food():
