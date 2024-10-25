@@ -2,24 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Food Recommendation</title>
+    <title>Food Recommendation Survey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .main-background {
+            background-image: url('static/assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            color: white;
+            z-index: 2;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+
+        /* Styles for the popup */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .popup.show {
+            display: block; /* Show the popup */
+        }
+    </style>
 </head>
-<body>
-    <h1>Food Recommendation Survey</h1>
-    <form action="/suggest" method="post">
-        {% for question in questions %}
-            <label for="question-{{ question.id }}">{{ question.question }}</label><br>
-            {% for option in question.options %}
-                <input type="radio" id="option-{{ question.id }}-{{ loop.index }}" name="{{ question.id }}" value="{{ option }}" required>
-                <label for="option-{{ question.id }}-{{ loop.index }}">{{ option }}</label><br>
+<body class="main-background">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1 class="text-4xl font-bold mt-12">Food Recommendation Survey</h1>
+        <form action="/suggest" method="post" class="mt-8">
+            {% for question in questions %}
+                <div class="mb-4">
+                    <label for="question-{{ question.id }}" class="text-lg">{{ question.question }}</label>
+                    <div class="mt-2">
+                        {% for option in question.options %}
+                            <div class="flex items-center">
+                                <input type="radio" id="option-{{ question.id }}-{{ loop.index }}" name="{{ question.id }}" value="{{ option }}" required class="mr-2">
+                                <label for="option-{{ question.id }}-{{ loop.index }}" class="text-gray-300">{{ option }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             {% endfor %}
-            <br>
-        {% endfor %}
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
-        
-        <input type="submit" value="Submit">
-    </form>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="submit" class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Submit</button>
+        </form>
+    </div>
+
+    <!-- Popup for sign-up -->
+    <div class="popup" id="signupPopup">
+        <h2 class="text-xl">Sign Up!</h2>
+        <p>Sign up to enjoy personalized recommendations. You can also sign up through Google.</p>
+        <button onclick="document.getElementById('signupPopup').classList.remove('show');" class="mt-4 bg-red-500 text-white py-2 px-4 rounded">Close</button>
+    </div>
+
     <script>
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -31,6 +97,8 @@
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
+
+        
     </script>
 </body>
 </html>

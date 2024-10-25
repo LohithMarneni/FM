@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FM Food with Mood</title>
-    <link href="static/styles/output.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .main-background {
@@ -62,8 +61,39 @@
         .start-button:hover {
             background-color: rgba(0, 100, 0, 1);
         }
-        .link{
+
+        .link {
             text-shadow: 2px 2px 4px rgba(0, 128, 0, 0.8);
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -79,19 +109,41 @@
             <!-- Start button -->
             <div class="m-9">
                 <a href="/question" class="start-button rounded-lg">START</a>
-
-
             </div>
             <!-- About, Contact, and Login links -->
-            <div class="mt-20 w-full flex justify-center space-x-80"> <!-- Updated div with Tailwind classes -->
+            <div class="mt-20 w-full flex justify-center space-x-80">
                 <a href="about.html" class="link text-gray-300 text-2xl font-bold">ABOUT</a>
                 <a href="contact.html" class="link text-gray-300 text-2xl font-bold">CONTACT</a>
                 <a href="login.html" class="link text-gray-300 text-2xl font-bold">LOGIN</a>
             </div>
-            
         </div>
     </div>
 
-    <script src="scripts/app.js"></script>
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal flex">
+        <div class="modal-content">
+            <span id="closeModal" class="close-modal text-gray-500 hover:text-gray-700">X</span>
+            <h2 class="text-2xl font-semibold mb-4">Sign Up or Sign in with Google</h2>
+            <p>Sign up to enjoy personalized recommendations.</p>
+            <button onclick="document.getElementById('signupModal').style.display='none';" class="mt-4 bg-red-500 text-white py-2 px-4 rounded">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Modal display logic
+    
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('signupModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('signupModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+    <!-- <script src="scripts/app.js"></script> -->
 </body>
 </html>
