@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Recommendation</title>
+</head>
+<body>
+    <h1>Food Recommendation Survey</h1>
+    <form action="/suggest" method="post">
+        {% for question in questions %}
+            <label for="question-{{ question.id }}">{{ question.question }}</label><br>
+            {% for option in question.options %}
+                <input type="radio" id="option-{{ question.id }}-{{ loop.index }}" name="{{ question.id }}" value="{{ option }}" required>
+                <label for="option-{{ question.id }}-{{ loop.index }}">{{ option }}</label><br>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+            }, function(error) {
+                console.error("Geolocation error:", error);
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    </script>
+</body>
+</html>
