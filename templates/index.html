@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Recommendation</title>
+</head>
+<body>
+    <h1>Food Recommendation Survey</h1>
+    <form action="/suggest" method="post">
+        {% for question in questions %}
+            <label for="question-{{ question.id }}">{{ question.question }}</label><br>
+            {% for option in question.options %}
+                <input type="radio" id="option-{{ question.id }}-{{ loop.index }}" name="{{ question.id }}" value="{{ option }}" required>
+                <label for="option-{{ question.id }}-{{ loop.index }}">{{ option }}</label><br>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
