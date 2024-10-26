@@ -2,11 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suggested Meal</title>
+    <style>
+        body {
+            background-image: url('static/assets/background.jpg'); /* Replace with your image path */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            font-family: 'Arial', sans-serif;
+            color: white; /* Text color for visibility */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem; /* Heading size */
+            margin-bottom: 1rem; /* Space below heading */
+        }
+        p {
+            font-size: 1.25rem; /* Paragraph size */
+            margin: 0.5rem 0; /* Space above and below paragraph */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
-    <h1>Your Suggested Meal</h1>
-    <p>{{ suggestion }}</p>
-    <p> {{ ress}}</p>
+    <div class="container">
+        <p>Food suggestion: {{ suggestion }}</p>
+        <p>Restaurant suggestion: {{ ress }}</p>
+    </div>
 </body>
 </html>

@@ -14,7 +14,7 @@
             width: 100vw;
             position: relative;
         }
-
+        
         .overlay {
             position: absolute;
             top: 0;
@@ -35,7 +35,6 @@
             text-align: center;
         }
 
-        /* Styles for the popup */
         .popup {
             display: none; /* Hidden by default */
             position: fixed;
@@ -53,21 +52,90 @@
         .popup.show {
             display: block; /* Show the popup */
         }
+
+        .question {
+            display: none; /* Hide all questions initially */
+        }
+
+        .question.show {
+            display: block; /* Show the active question */
+        }
+
+        #nextButton {
+            background-color: rgba(71, 202, 71, 0.8); 
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.375rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 200px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        #nextButton:hover {
+            background-color: rgba(0, 100, 0, 1);
+        }
+
+        /* Custom radio button styles */
+        input[type="radio"] {
+            display: none; /* Hide the default radio button */
+        }
+
+        .radio-label {
+            position: relative;
+            padding-left: 35px; /* Space for custom radio */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px; /* Size of outer circle */
+            height: 20px; /* Size of outer circle */
+            border-radius: 50%; /* Make it circular */
+            border: 2px solid rgba(255, 255, 255, 0.7); /* Default border color */
+            background-color: transparent; /* Background color when unselected */
+            transition: background-color 0.3s ease; /* Transition for smooth effect */
+        }
+
+        input[type="radio"]:checked + .radio-label:before {
+            background-color: transparent; /* Outer circle stays transparent */
+            border-color: rgb(1, 31, 1); /* Change border color when selected */
+        }
+
+        input[type="radio"]:checked + .radio-label:after {
+            content: '';
+            position: absolute;
+            left: 5px; /* Inner circle position */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px; /* Size of inner circle */
+            height: 10px; /* Size of inner circle */
+            border-radius: 50%; /* Make it circular */
+            background-color: rgb(2, 80, 2); /* Inner circle color when selected */
+        }
     </style>
 </head>
 <body class="main-background">
     <div class="overlay"></div>
     <div class="content">
-        <h1 class="text-4xl font-bold mt-12">Food Recommendation Survey</h1>
-        <form action="/suggest" method="post" class="mt-8">
+        <h1 class="text-4xl font-bold mt-12">Good Food, Good Mood</h1>
+        <form id="surveyForm" action="/suggest" method="post" class="mt-8">
             {% for question in questions %}
-                <div class="mb-4">
+                <div class="question content bg-green-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100 p-5 "  id="question-{{ question.id }}">
                     <label for="question-{{ question.id }}" class="text-lg">{{ question.question }}</label>
                     <div class="mt-2">
                         {% for option in question.options %}
                             <div class="flex items-center">
                                 <input type="radio" id="option-{{ question.id }}-{{ loop.index }}" name="{{ question.id }}" value="{{ option }}" required class="mr-2">
-                                <label for="option-{{ question.id }}-{{ loop.index }}" class="text-gray-300">{{ option }}</label>
+                                <label for="option-{{ question.id }}-{{ loop.index }}" class="radio-label text-gray-300">{{ option }}</label>
                             </div>
                         {% endfor %}
                     </div>
@@ -75,7 +143,8 @@
             {% endfor %}
             <input type="hidden" id="latitude" name="latitude">
             <input type="hidden" id="longitude" name="longitude">
-            <button type="submit" class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Submit</button>
+            <button type="button" id="nextButton" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded" onclick="nextQuestion()">Next</button>
+            <button type="submit" id="submitButton" class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded hidden">Submit</button>
         </form>
     </div>
 
@@ -87,6 +156,29 @@
     </div>
 
     <script>
+        let currentQuestionIndex = 0;
+        const questions = document.querySelectorAll('.question');
+        const nextButton = document.getElementById('nextButton');
+        const submitButton = document.getElementById('submitButton');
+
+        function showQuestion(index) {
+            questions.forEach((question, idx) => {
+                question.classList.toggle('show', idx === index);
+            });
+            nextButton.style.display = index < questions.length - 1 ? 'inline-block' : 'none';
+            submitButton.style.display = index === questions.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        // Initialize the survey by showing the first question
+        showQuestion(currentQuestionIndex);
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 document.getElementById('latitude').value = position.coords.latitude;
@@ -97,8 +189,6 @@
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
-
-        
     </script>
 </body>
 </html>

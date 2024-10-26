@@ -15,14 +15,6 @@ questions = [
      "options": ["Sweet to lift me up", "Spicy for excitement", "Sour for a refreshing kick", "Umami for comfort", "Bitter for a bold taste"]},
     {"id": 6, "question": "What color do you associate with your current mood?", 
      "options": ["Bright and vibrant", "Calm and soothing", "Bold and intense", "Warm and inviting", "Cool and refreshing"]},
-    {"id": 7, "question": "If you could have any food as a reward for your mood, what would it be?", 
-     "options": ["Decadent chocolate cake", "Spicy tacos", "Fresh salad", "Comforting mac and cheese", "Exotic sushi"]},
-    {"id": 8, "question": "What type of meal would you want to share with a friend right now?", 
-     "options": ["Finger foods like sliders", "A hearty pizza", "A warm bowl of soup", "A colorful fruit platter", "A fancy three-course dinner"]},
-    {"id": 9, "question": "Which smell would make your day better?", 
-     "options": ["Freshly baked cookies", "Grilled vegetables", "Herbs and spices", "Freshly brewed coffee", "Fruits"]},
-    {"id": 10, "question": "If your mood had a signature dish, what would it be?", 
-     "options": ["Indulgent lasagna", "Zesty ceviche", "Hearty chili", "Light sushi rolls", "Comforting chicken noodle soup"]}
 ]
 
 @app.route('/')

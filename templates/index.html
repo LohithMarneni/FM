@@ -112,38 +112,14 @@
             </div>
             <!-- About, Contact, and Login links -->
             <div class="mt-20 w-full flex justify-center space-x-80">
-                <a href="about.html" class="link text-gray-300 text-2xl font-bold">ABOUT</a>
-                <a href="contact.html" class="link text-gray-300 text-2xl font-bold">CONTACT</a>
-                <a href="login.html" class="link text-gray-300 text-2xl font-bold">LOGIN</a>
+                <a href="#" class="link text-gray-300 text-2xl font-bold">ABOUT</a>
+                <a href="#" class="link text-gray-300 text-2xl font-bold">CONTACT</a>
+                <a href="#" class="link text-gray-300 text-2xl font-bold">LOGIN</a>
             </div>
         </div>
     </div>
-
-    <!-- Signup Modal -->
-    <div id="signupModal" class="modal flex">
-        <div class="modal-content">
-            <span id="closeModal" class="close-modal text-gray-500 hover:text-gray-700">X</span>
-            <h2 class="text-2xl font-semibold mb-4">Sign Up or Sign in with Google</h2>
-            <p>Sign up to enjoy personalized recommendations.</p>
-            <button onclick="document.getElementById('signupModal').style.display='none';" class="mt-4 bg-red-500 text-white py-2 px-4 rounded">Close</button>
-        </div>
-    </div>
-
     <script>
-        // Modal display logic
-    
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('signupModal').style.display = 'none';
-        });
-
-        // Close modal when clicking outside of it
-        window.onclick = function(event) {
-            const modal = document.getElementById('signupModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
     </script>
-    <!-- <script src="scripts/app.js"></script> -->
+   
 </body>
 </html>
