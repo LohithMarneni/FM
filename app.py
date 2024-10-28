@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import google.generativeai as genai
-genai.configure(api_key="AIzaSyAl4NDlsCEJxQpBhqa-3IRxxLSMw1gI-Dc")
+genai.configure(api_key=api_key_here)
 app = Flask(__name__)
 questions = [
     {"id": 1, "question": "How would you describe your current mood in a flavor?", 
